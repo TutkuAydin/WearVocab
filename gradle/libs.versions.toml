@@ -12,6 +12,7 @@ activity = "1.12.2"
 constraintlayout = "2.2.1"
 composeBom = "2024.09.00"
 composeMaterial = "1.2.1"
+composeMaterialIcons = "1.5.4"
 composeFoundation = "1.2.1"
 wearToolingPreview = "1.0.0"
 activityCompose = "1.12.2"
@@ -38,6 +39,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
+androidx-compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeMaterialIcons" }
 androidx-compose-foundation = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "composeFoundation" }
 androidx-wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -47,6 +49,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 kotlin-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinPlayServices" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

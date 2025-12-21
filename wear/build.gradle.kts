@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -49,7 +50,12 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.wear.tooling.preview)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.material.icons)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
+    implementation(libs.kotlin.play.services)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
