@@ -18,6 +18,7 @@ activityCompose = "1.12.2"
 coreSplashscreen = "1.0.1"
 material3Android = "1.4.0"
 roomVersion = "2.6.1"
+kotlinPlayServices = "1.7.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,7 @@ androidx-material3-android = { group = "androidx.compose.material3", name = "mat
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+kotlin-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinPlayServices" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

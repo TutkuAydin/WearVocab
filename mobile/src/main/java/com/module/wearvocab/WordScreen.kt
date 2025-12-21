@@ -26,7 +26,6 @@ fun WordScreen(viewModel: WordViewModel) {
     var tr by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        // Kelime Ekleme Alanı
         TextField(value = eng, onValueChange = { eng = it }, label = { Text(text = "English") })
         TextField(value = tr, onValueChange = { tr = it }, label = { Text("Anlamı") })
 
@@ -39,7 +38,6 @@ fun WordScreen(viewModel: WordViewModel) {
 
         Divider(modifier = Modifier.padding(vertical = 8.dp))
 
-        // Kelime Listesi
         LazyColumn {
             items(words) { word ->
                 Row(

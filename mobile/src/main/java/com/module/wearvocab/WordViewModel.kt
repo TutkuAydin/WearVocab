@@ -2,14 +2,25 @@ package com.module.wearvocab
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.module.wearvocab.data.WearableManager
 import com.module.wearvocab.data.room.Word
 import com.module.wearvocab.data.room.WordDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class WordViewModel(private val dao: WordDao) : ViewModel() {
+class WordViewModel(
+    private val dao: WordDao,
+    private val wearableManager: WearableManager
+) : ViewModel() {
 
-    // Tüm kelimeleri otomatik güncellenen bir akış (Flow) olarak alıyoruz
+    init {
+        viewModelScope.launch {
+            dao.getWordsToLearn().collect { words ->
+                wearableManager.sendWordsToWatch(words)
+            }
+        }
+    }
+
     val allWords: Flow<List<Word>> = dao.getAllWords()
 
     fun addWord(english: String, meaning: String, sentence: String) {
