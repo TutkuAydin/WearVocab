@@ -14,35 +14,52 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.material.*
 import com.module.wearvocab.data.room.Word
 
 @Composable
 fun WearWordScreen(viewModel: WearWordViewModel) {
-    val words by viewModel.wordsToLearn.collectAsState(initial = emptyList())
-    val pagerState = rememberPagerState { words.size }
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val pagerState = rememberPagerState(pageCount = { state.words.size })
 
     Scaffold(
-        timeText = { TimeText() }, // Saatin üstünde zamanı gösterir
+        timeText = { TimeText() },
         vignette = { Vignette(vignettePosition = VignettePosition.TopAndBottom) } // Kenarları yumuşatır
     ) {
-        if (words.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        if (state.isLoading) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else if (state.words.isEmpty()) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text("Tüm kelimeler bitti! ✅", textAlign = TextAlign.Center)
             }
         } else {
-            HorizontalPager(state = pagerState) { page ->
-                val word = words[page]
-                WordCard(word = word, onLearnedClick = { viewModel.markAsLearned(word) })
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { pageIndex ->
+                if (pageIndex < state.words.size) {
+                    val word = state.words[pageIndex]
+                    val context = LocalContext.current
+
+                    WordCard(
+                        word = word,
+                        onLearnedClick = {
+                            viewModel.handleIntent(WearWordIntent.MarkAsLearned(word, context))
+                        }
+                    )
+                }
             }
         }
     }

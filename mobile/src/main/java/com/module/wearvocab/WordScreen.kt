@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,10 +16,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun WordScreen(viewModel: WordViewModel) {
-    val words by viewModel.allWords.collectAsState(initial = emptyList())
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     var eng by remember { mutableStateOf("") }
     var tr by remember { mutableStateOf("") }
@@ -29,17 +29,29 @@ fun WordScreen(viewModel: WordViewModel) {
         TextField(value = eng, onValueChange = { eng = it }, label = { Text(text = "English") })
         TextField(value = tr, onValueChange = { tr = it }, label = { Text("Anlamı") })
 
-        Button(onClick = {
-            viewModel.addWord(eng, tr, "Örnek cümle buraya...")
-            eng = ""; tr = ""
-        }) {
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            onClick = {
+                if (eng.isNotBlank() && tr.isNotBlank()) {
+                    viewModel.handleIntent(
+                        WordIntent.AddWord(eng, tr, "Örnek cümle buraya...")
+                    )
+                    eng = ""; tr = ""
+                }
+            }
+        ) {
             Text("Ekle")
         }
 
         Divider(modifier = Modifier.padding(vertical = 8.dp))
 
         LazyColumn {
-            items(words) { word ->
+            items(
+                items = state.words,
+                key = { it.id }
+            ) { word ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -52,7 +64,11 @@ fun WordScreen(viewModel: WordViewModel) {
                     }
                     Checkbox(
                         checked = word.isLearned,
-                        onCheckedChange = { viewModel.toggleLearned(word) }
+                        onCheckedChange = {
+                            viewModel.handleIntent(
+                                WordIntent.ToggleLearned(word)
+                            )
+                        }
                     )
                 }
             }
