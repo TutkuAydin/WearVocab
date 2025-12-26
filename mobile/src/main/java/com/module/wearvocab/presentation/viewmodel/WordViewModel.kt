@@ -1,8 +1,8 @@
-package com.module.wearvocab
+package com.module.wearvocab.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.module.wearvocab.data.WearableManager
+import com.module.wearvocab.data.service.WearableManager
 import com.module.wearvocab.data.room.Word
 import com.module.wearvocab.data.room.WordDao
 import kotlinx.coroutines.Dispatchers

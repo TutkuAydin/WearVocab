@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">WearVocab</string>
+
+    <string name="app_title">My Wordbook</string>
+
+    <string name="tab_to_learn">To Learn</string>
+    <string name="tab_learned">Learned</string>
+
+    <string name="add_new_word">Add New Word</string>
+    <string name="label_eng_word">English Word</string>
+    <string name="label_tr_meaning">Turkish Meaning</string>
+    <string name="label_example_sentence">Example Sentence (Optional)</string>
+    <string name="btn_add_to_list">Add to List</string>
+    <string name="desc_search_api">Fetch from API</string>
+
+    <string name="empty_to_learn">Great! No words left to learn.</string>
+    <string name="empty_learned">No words learned yet.</string>
+
+    <string name="desc_learned">Learned</string>
+    <string name="desc_not_learned">Mark as not learned</string>
 </resources>

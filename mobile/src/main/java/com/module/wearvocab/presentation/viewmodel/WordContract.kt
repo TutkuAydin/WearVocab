@@ -1,4 +1,4 @@
-package com.module.wearvocab
+package com.module.wearvocab.presentation.viewmodel
 
 import com.module.wearvocab.data.room.Word
 

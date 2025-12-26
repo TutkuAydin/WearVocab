@@ -1,8 +1,8 @@
-package com.module.wearvocab
+package com.module.wearvocab.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.module.wearvocab.data.WearableManager
+import com.module.wearvocab.data.service.WearableManager
 import com.module.wearvocab.data.room.WordDao
 
 class WordViewModelFactory(

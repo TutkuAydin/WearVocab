@@ -5,8 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Surface
 import androidx.lifecycle.ViewModelProvider
-import com.module.wearvocab.data.WearableManager
+import com.module.wearvocab.data.service.WearableManager
 import com.module.wearvocab.data.room.WordDatabase
+import com.module.wearvocab.presentation.screen.WordScreen
+import com.module.wearvocab.presentation.viewmodel.WordViewModel
+import com.module.wearvocab.presentation.viewmodel.WordViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

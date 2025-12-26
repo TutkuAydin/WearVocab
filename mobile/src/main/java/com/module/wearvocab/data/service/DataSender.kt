@@ -1,4 +1,4 @@
-package com.module.wearvocab.data
+package com.module.wearvocab.data.service
 
 import android.content.Context
 import com.google.android.gms.wearable.PutDataMapRequest

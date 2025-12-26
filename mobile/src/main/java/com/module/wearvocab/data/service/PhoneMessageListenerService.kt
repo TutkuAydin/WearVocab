@@ -1,4 +1,4 @@
-package com.module.wearvocab.data
+package com.module.wearvocab.data.service
 
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.WearableListenerService
