@@ -1,4 +1,4 @@
-package com.module.wearvocab.data
+package com.module.wearvocab.data.service
 
 import android.util.Log
 import com.google.android.gms.wearable.DataEventBuffer
@@ -30,7 +30,7 @@ class DataLayerListenerService : WearableListenerService() {
     }
 
     private suspend fun saveToLocalDatabase(wordStrings: Array<String>) {
-        val db = WordDatabase.getDatabase(applicationContext)
+        val db = WordDatabase.Companion.getDatabase(applicationContext)
         val dao = db.wordDao()
 
         dao.deleteAllWords()

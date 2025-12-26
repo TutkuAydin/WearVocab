@@ -26,7 +26,14 @@ class WearWordViewModel(private val dao: WordDao) : ViewModel() {
     fun handleIntent(intent: WearWordIntent) {
         when (intent) {
             is WearWordIntent.LoadWords -> observeWords()
-            is WearWordIntent.MarkAsLearned -> markAsLearned(intent.word, intent.context)
+            is WearWordIntent.SelectWord -> {
+                _uiState.update { it.copy(selectedWord = intent.word) }
+            }
+
+            is WearWordIntent.MarkAsLearned -> {
+                markAsLearned(intent.word, intent.context)
+                _uiState.update { it.copy(selectedWord = null) }
+            }
         }
     }
 

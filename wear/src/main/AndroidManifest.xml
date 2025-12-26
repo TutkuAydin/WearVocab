@@ -39,7 +39,7 @@
         </activity>
 
         <service
-            android:name=".data.DataLayerListenerService"
+            android:name=".data.service.DataLayerListenerService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
