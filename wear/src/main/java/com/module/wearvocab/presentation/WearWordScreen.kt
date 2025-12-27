@@ -1,31 +1,22 @@
 package com.module.wearvocab.presentation
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import com.module.wearvocab.R
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.lazy.AutoCenteringParams
 import androidx.wear.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.material.*
-import com.module.wearvocab.data.room.Word
+import com.module.wearvocab.presentation.components.WordCard
 import com.module.wearvocab.presentation.components.WordDetailScreen
 
 @Composable
@@ -70,55 +61,15 @@ fun WearWordScreen(viewModel: WearWordViewModel) {
                     autoCentering = AutoCenteringParams(itemIndex = 0)
                 ) {
                     items(state.words) { word ->
-                        TitleCard(
+                        WordCard(
+                            word = word,
                             onClick = {
                                 viewModel.handleIntent(WearWordIntent.SelectWord(word))
                             },
-                            title = {
-                                Text(
-                                    word.englishWord,
-                                    color = MaterialTheme.colors.primary
-                                )
-                            },
-                            backgroundPainter = CardDefaults.cardBackgroundPainter(
-                                startBackgroundColor = MaterialTheme.colors.surface,
-                                endBackgroundColor = MaterialTheme.colors.surface
-                            )
-                        ) {
-                            Column {
-                                Text(text = word.meaning, style = MaterialTheme.typography.body2)
-
-                                Spacer(modifier = Modifier.height(4.dp))
-
-                                Box(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    CompactButton(
-                                        onClick = {
-                                            viewModel.handleIntent(
-                                                WearWordIntent.MarkAsLearned(
-                                                    word,
-                                                    context
-                                                )
-                                            )
-                                        },
-                                        colors = ButtonDefaults.buttonColors(
-                                            backgroundColor = Color(
-                                                0xFF4CAF50
-                                            )
-                                        ),
-                                        modifier = Modifier.size(ButtonDefaults.SmallButtonSize)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Check,
-                                            contentDescription = stringResource(R.string.desc_learned),
-                                            modifier = Modifier.size(18.dp)
-                                        )
-                                    }
-                                }
+                            onMarkLearned = {
+                                viewModel.handleIntent(WearWordIntent.MarkAsLearned(word, context))
                             }
-                        }
+                        )
                     }
                 }
             }
