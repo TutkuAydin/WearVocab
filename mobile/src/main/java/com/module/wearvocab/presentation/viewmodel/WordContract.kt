@@ -12,5 +12,6 @@ data class WordUiState(
 sealed class WordIntent {
     data class FetchAndSaveWord(val englishWord: String, val context: Context) : WordIntent()
     data class ToggleLearned(val word: Word) : WordIntent()
+    data class DeleteWord(val word: Word) : WordIntent()
     object LoadWords : WordIntent()
 }

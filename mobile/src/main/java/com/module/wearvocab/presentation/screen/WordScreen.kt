@@ -61,7 +61,7 @@ fun WordScreen(viewModel: WordViewModel) {
 
             if (selectedTabIndex == 0) {
                 AddWordSection(
-                    onSearch = { englishWord->
+                    onSearch = { englishWord ->
                         viewModel.handleIntent(WordIntent.FetchAndSaveWord(englishWord, context))
                     }
                 )
@@ -85,8 +85,11 @@ fun WordScreen(viewModel: WordViewModel) {
                 } else {
                     WordList(
                         words = filteredWords,
-                        onSwipe = { word ->
+                        onToggleLearned = { word ->
                             viewModel.handleIntent(WordIntent.ToggleLearned(word))
+                        },
+                        onDelete = { word ->
+                            viewModel.handleIntent(WordIntent.DeleteWord(word))
                         }
                     )
                 }

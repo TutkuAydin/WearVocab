@@ -45,6 +45,7 @@ class WordViewModel(
         when (intent) {
             is WordIntent.FetchAndSaveWord -> fetchAndSaveWord(intent.englishWord, intent.context)
             is WordIntent.ToggleLearned -> updateWord(intent.word)
+            is WordIntent.DeleteWord -> deleteWord(intent.word)
             WordIntent.LoadWords -> observeWords()
         }
     }
@@ -57,6 +58,12 @@ class WordViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             dao.updateWord(word.copy(isLearned = !word.isLearned))
+        }
+    }
+
+    private fun deleteWord(word: Word) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dao.deleteWord(word)
         }
     }
 
