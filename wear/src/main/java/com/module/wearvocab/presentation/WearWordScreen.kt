@@ -92,7 +92,7 @@ fun WearWordScreen(viewModel: WearWordViewModel) {
 
                                 Box(
                                     modifier = Modifier.fillMaxWidth(),
-                                    contentAlignment = Alignment.Center // Sadece içindekini ortalar
+                                    contentAlignment = Alignment.Center
                                 ) {
                                     CompactButton(
                                         onClick = {

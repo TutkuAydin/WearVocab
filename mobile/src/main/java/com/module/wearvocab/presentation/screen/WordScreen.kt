@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.module.wearvocab.R
@@ -26,7 +27,7 @@ import com.module.wearvocab.presentation.components.WordList
 @Composable
 fun WordScreen(viewModel: WordViewModel) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-
+    val context = LocalContext.current
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf(
         stringResource(R.string.tab_to_learn),
@@ -60,8 +61,8 @@ fun WordScreen(viewModel: WordViewModel) {
 
             if (selectedTabIndex == 0) {
                 AddWordSection(
-                    onAddWord = { eng, tr, sentence ->
-                        viewModel.handleIntent(WordIntent.AddWord(eng, tr, sentence))
+                    onSearch = { englishWord->
+                        viewModel.handleIntent(WordIntent.FetchAndSaveWord(englishWord, context))
                     }
                 )
             }

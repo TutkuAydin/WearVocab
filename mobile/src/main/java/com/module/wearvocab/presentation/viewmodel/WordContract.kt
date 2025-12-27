@@ -1,5 +1,6 @@
 package com.module.wearvocab.presentation.viewmodel
 
+import android.content.Context
 import com.module.wearvocab.data.room.Word
 
 data class WordUiState(
@@ -9,7 +10,7 @@ data class WordUiState(
 )
 
 sealed class WordIntent {
-    data class AddWord(val eng: String, val tr: String, val sentence: String) : WordIntent()
+    data class FetchAndSaveWord(val englishWord: String, val context: Context) : WordIntent()
     data class ToggleLearned(val word: Word) : WordIntent()
     object LoadWords : WordIntent()
 }

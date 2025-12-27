@@ -1,10 +1,14 @@
 package com.module.wearvocab.presentation.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.module.wearvocab.data.api.RetrofitClient
 import com.module.wearvocab.data.service.WearableManager
 import com.module.wearvocab.data.room.Word
 import com.module.wearvocab.data.room.WordDao
+import com.module.wearvocab.presentation.extension.showToast
+import com.module.wearvocab.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class WordViewModel(
     private val dao: WordDao,
@@ -38,21 +43,9 @@ class WordViewModel(
 
     fun handleIntent(intent: WordIntent) {
         when (intent) {
-            is WordIntent.AddWord -> addNewWord(intent)
+            is WordIntent.FetchAndSaveWord -> fetchAndSaveWord(intent.englishWord, intent.context)
             is WordIntent.ToggleLearned -> updateWord(intent.word)
             WordIntent.LoadWords -> observeWords()
-        }
-    }
-
-    private fun addNewWord(intent: WordIntent.AddWord) {
-        viewModelScope.launch(Dispatchers.IO) {
-            dao.insertWord(
-                Word(
-                    englishWord = intent.eng,
-                    meaning = intent.tr,
-                    exampleSentence = intent.sentence
-                )
-            )
         }
     }
 
@@ -64,6 +57,55 @@ class WordViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             dao.updateWord(word.copy(isLearned = !word.isLearned))
+        }
+    }
+
+    private fun fetchAndSaveWord(englishWord: String, context: Context) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            try {
+                val response = RetrofitClient.api.getDefinition(englishWord)
+                if (response.isNullOrEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        context.showToast(R.string.error_word_not_found)
+                    }
+                    return@launch
+                }
+
+                val firstEntry = response[0]
+                val meaning =
+                    firstEntry.meanings.firstOrNull()?.definitions?.firstOrNull()?.definition
+                val example =
+                    firstEntry.meanings.firstOrNull()?.definitions?.firstOrNull()?.example.orEmpty()
+
+                if (meaning != null) {
+                    val newWord = Word(
+                        englishWord = englishWord.replaceFirstChar { it.uppercase() },
+                        meaning = meaning,
+                        exampleSentence = example,
+                        isLearned = false
+                    )
+                    dao.insertWord(
+                        newWord
+                    )
+
+                    withContext(Dispatchers.Main) {
+                        context.showToast(R.string.success_word_added)
+                    }
+
+                } else {
+                    withContext(Dispatchers.Main) {
+                        context.showToast(R.string.error_meaning_not_found)
+                    }
+                }
+
+            } catch (_: Exception) {
+                withContext(Dispatchers.Main) {
+                    context.showToast(R.string.error_network_or_api)
+                }
+            } finally {
+                _uiState.update { it.copy(isLoading = false) }
+            }
         }
     }
 }

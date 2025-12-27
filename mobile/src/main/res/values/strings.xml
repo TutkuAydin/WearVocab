@@ -8,14 +8,17 @@
 
     <string name="add_new_word">Add New Word</string>
     <string name="label_eng_word">English Word</string>
-    <string name="label_tr_meaning">Turkish Meaning</string>
-    <string name="label_example_sentence">Example Sentence (Optional)</string>
-    <string name="btn_add_to_list">Add to List</string>
-    <string name="desc_search_api">Fetch from API</string>
+    <string name="search_and_add">Search and Add</string>
 
     <string name="empty_to_learn">Great! No words left to learn.</string>
     <string name="empty_learned">No words learned yet.</string>
 
     <string name="desc_learned">Learned</string>
     <string name="desc_not_learned">Mark as not learned</string>
+
+    <!--Error Messages -->
+    <string name="error_word_not_found">Word not found!</string>
+    <string name="error_meaning_not_found">Meaning not found!</string>
+    <string name="error_network_or_api">Word not in dictionary or network error!</string>
+    <string name="success_word_added">Word added successfully!</string>
 </resources>
