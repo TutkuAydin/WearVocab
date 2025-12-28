@@ -9,5 +9,6 @@ data class Word(
     val englishWord: String,
     val meaning: String,
     val exampleSentence: String,
+    val audioUrl: String? = null,
     val isLearned: Boolean = false
 )

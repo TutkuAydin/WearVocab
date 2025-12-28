@@ -12,7 +12,7 @@ class WearableManager(context: Context) {
     suspend fun sendWordsToWatch(words: List<Word>) {
         try {
             val request = PutDataMapRequest.create("/words_path").apply {
-                val wordListStrings = words.map { "${it.englishWord}|${it.meaning}|${it.exampleSentence}" }
+                val wordListStrings = words.map { "${it.englishWord}|${it.meaning}|${it.exampleSentence}|${it.audioUrl}" }
                 dataMap.putStringArray("word_list", wordListStrings.toTypedArray())
                 dataMap.putLong("timestamp", System.currentTimeMillis())
             }

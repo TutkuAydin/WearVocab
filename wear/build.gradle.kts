@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.room.runtime)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.compose.material.core)
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
     implementation(libs.kotlin.play.services)

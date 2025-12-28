@@ -84,13 +84,15 @@ class WordViewModel(
                     firstEntry.meanings.firstOrNull()?.definitions?.firstOrNull()?.definition
                 val example =
                     firstEntry.meanings.firstOrNull()?.definitions?.firstOrNull()?.example.orEmpty()
+                val audioUrl = firstEntry.phonetics.firstOrNull { it.audio?.isNotBlank() == true }?.audio
 
                 if (meaning != null) {
                     val newWord = Word(
                         englishWord = englishWord.replaceFirstChar { it.uppercase() },
                         meaning = meaning,
                         exampleSentence = example,
-                        isLearned = false
+                        isLearned = false,
+                        audioUrl = audioUrl
                     )
                     dao.insertWord(
                         newWord

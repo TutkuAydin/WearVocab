@@ -21,6 +21,7 @@ material3Android = "1.4.0"
 roomVersion = "2.6.1"
 kotlinPlayServices = "1.7.3"
 retrofit = "2.9.0"
+composeMaterialCore = "1.5.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,6 +53,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 kotlin-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinPlayServices" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+androidx-compose-material-core = { group = "androidx.wear.compose", name = "compose-material-core", version.ref = "composeMaterialCore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

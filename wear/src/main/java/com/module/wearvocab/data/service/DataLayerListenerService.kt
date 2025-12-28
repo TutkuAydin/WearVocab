@@ -40,6 +40,7 @@ class DataLayerListenerService : WearableListenerService() {
                 englishWord = parts[0],
                 meaning = parts[1],
                 exampleSentence = parts.getOrElse(2) { "" },
+                audioUrl = parts[3],
                 isLearned = false
             )
         }
